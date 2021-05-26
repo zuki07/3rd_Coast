@@ -1365,7 +1365,7 @@ input, select, textarea {
 /* Header */
 
 	#header {
-		background-image: url(../../../images/logo2.jpg);
+		background-image: url(../../images/logo2.jpg);
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
