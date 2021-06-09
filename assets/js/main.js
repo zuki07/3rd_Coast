@@ -45,16 +45,16 @@
 					valid=false;
 				}
 
-				testElementEmpty($('#email'), $('.email_error'), 'Enter a email');
-				if(!$('#email').val().match(/^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i) && !$('#email').val()==''){
-					$('.email_error').show();
-					$('.email_error').text($('#email').val()+' is not a valid email');
-					valid=false;
-				}
+
 				testElementEmpty($('#subject'), $('.subject_error'), 'Enter a subject');
 
 				testElementEmpty($('#message'), $('.message_error'), 'Enter a message');
 
+				if($('#message').length>2000 && !$('#message').val()==''){
+					$('.message_error').show();
+					$('.message_error').text('Message is over 2000 characters');
+					valid=false;
+				}
 				if(!valid){
 					// Stop propagation, default.
 					event.preventDefault();
@@ -63,6 +63,11 @@
 				else{
 				// Submit form.
 					$('form').submit();
+					var link="mailto:wildzuk@yahoo.com"
+										+"?cc="
+										+"&subject="+encodeURIComponent($('#subject').val())
+										+"&body="+encodeURIComponent($('#message').val()+'\n\nThanks,\n'+$('#name').val()+'\n');
+					window.location.href=link;
 				}
 
 				function testElementEmpty(element, error_element, error_str){
