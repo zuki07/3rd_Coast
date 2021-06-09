@@ -1,6 +1,3 @@
-function move(){
-	alert("hello");
-}
 
 (function($) {
 

@@ -30,19 +30,55 @@
 			}, 100);
 		});
 
-	// Forms.
+	// Forms
 
 		// Hack: Activate non-input submits.
-			$('form').on('click', '.submit', function(event) {
+			$('.error').hide();
 
-				// Stop propagation, default.
-					event.stopPropagation();
+			$('button').click(function(event) {
+				var valid=true;
+
+				testElementEmpty($('#name'), $('.name_error'), 'Enter a name');
+				if(!$('#name').val().match(/^[a-zA-Z-' ]*$/) && !$('#name').val()==''){
+					$('.name_error').show();
+					$('.name_error').text($('#name').val()+' is not a valid name');
+					valid=false;
+				}
+
+				testElementEmpty($('#email'), $('.email_error'), 'Enter a email');
+				if(!$('#email').val().match(/^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i) && !$('#email').val()==''){
+					$('.email_error').show();
+					$('.email_error').text($('#email').val()+' is not a valid email');
+					valid=false;
+				}
+				testElementEmpty($('#subject'), $('.subject_error'), 'Enter a subject');
+
+				testElementEmpty($('#message'), $('.message_error'), 'Enter a message');
+
+				if(!valid){
+					// Stop propagation, default.
 					event.preventDefault();
-
+					event.stopPropagation();
+				}
+				else{
 				// Submit form.
-					$(this).parents('form').submit();
+					$('form').submit();
+				}
+
+				function testElementEmpty(element, error_element, error_str){
+					if($(element).val()==''){
+						$(error_element).show();
+						$(error_element).text(error_str);
+						valid=false;
+					}
+					else{
+						$(error_element).hide();
+					}
+					return valid;
+				}
 
 			});
+
 
 	// Sidebar.
 		if ($sidebar.length > 0) {
@@ -186,6 +222,7 @@
 
 				}
 			});
+
 
 
 })(jQuery);
